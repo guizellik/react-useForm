@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
+import './style.css'
 
 const Form = () => {
   const { register, handleSubmit, watch, errors } = useForm();
@@ -11,35 +12,49 @@ const Form = () => {
   const watchEstadoCivil = watch('estadoCivil')
 
   return (
-    <div>
+    <div className='form-wrapper'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Nome: </label>
-        <input name='nome' ref={register({ required: true })} placeholder='Digite seu nome...' />
-        {errors.nome && 'Nome é obrigatório!'}<br/>
+        <ul>
+          <li>
+            <label>Nome: </label>
+            <input name='nome' ref={register({ required: true })} placeholder='Digite seu nome...' />
+            {errors.nome && 'Nome é obrigatório!'}
+          </li>
 
-        <label>Cidade: </label>
-        <input name='cidade' ref={register} placeholder='Digite sua cidade aqui...'/><br/>
+          <li>
+            <label>Cidade: </label>
+            <input name='cidade' ref={register} placeholder='Digite sua cidade aqui...'/>
+          </li>
 
-        <label>E-mail: </label>
-        <input type='email' name='email' ref={register({ required: true })} placeholder='Digite seu e-mail aqui...' />
-        {errors.email && 'E-mail é obrigatório!'}<br/>
+          <li>
+            <label>E-mail: </label>
+            <input type='email' name='email' ref={register({ required: true })} placeholder='Digite seu e-mail aqui...' />
+            {errors.email && 'E-mail é obrigatório!'}
+          </li>
 
-        <label>Idade: </label>
-        <input name='idade' type='number' ref={register({ required: true, min: 18 })} placeholder='Digite sua idade aqui...'/>
-        {errors.idade && 'Menores de 18 anos não podem entrar!'}<br/>
+          <li>
+            <label>Idade: </label>
+            <input name='idade' type='number' ref={register({ required: true, min: 18 })} placeholder='Digite sua idade aqui...'/>
+            {errors.idade && 'Menores de 18 anos não podem entrar!'} <br />
+          </li>
 
-        <span>Estado Civil</span><br/>
-        <label>Solteiro</label>
-        <input name='estadoCivil' type='radio' value='solteiro' ref={register({ required: true })} /><br/>
-
-        <label>Casado</label>
-        <input name='estadoCivil' type='radio' value='casado' ref={register} />
-        {watchEstadoCivil === 'casado' && (
-          <div>
-            <label>Cônjuge?</label>
-            <input type='text' name='conjuge' ref={register({ required: true})} />
-          </div>
-        )}<br/>
+          <li>
+            <h4>Estado Civil</h4>
+            <label className='container'>Solteiro
+              <input name='estadoCivil' type='radio' value='solteiro' ref={register({ required: true })} />
+              <span className='checkmark'></span>
+            </label>
+            <label className='container'>Casado
+              <input name='estadoCivil' type='radio' value='casado' ref={register} />
+              <span className='checkmark'></span>
+            </label>
+            {watchEstadoCivil === 'casado' && (
+                <div className='conjuge-wrapper'>
+                  <input type='text' name='conjuge'  placeholder='Digite o nome do cônjuge...' ref={register({ required: true})} />
+                </div>
+            )}
+          </li>
+        </ul>
         <button>Enviar</button>
       </form>
     </div>
